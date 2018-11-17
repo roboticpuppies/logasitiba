@@ -37,7 +37,8 @@ class Auth extends CI_Controller {
 		$result = $this->db->get()->row();
 
 		if (count($result) < 1) {
-			echo "Username Tidak terdaftar";
+			$this->session->set_flashdata( 'message', 'Username tidak terdaftar.' );
+			redirect('auth/','refresh');
 		}
 		else {
 			if (password_verify($user_pass,$result->user_pass)) {
@@ -67,7 +68,8 @@ class Auth extends CI_Controller {
 				}
 			}
 			else {
-				echo "Password salah";
+				$this->session->set_flashdata( 'message', 'Password salah.' );
+				redirect('auth/','refresh');
 			}
 		}
 	}
