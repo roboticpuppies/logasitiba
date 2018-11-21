@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Inventory extends CI_Controller {
 	public function check_privilege()
 	{
 		if($this->session->userdata('logged_in')) {
@@ -18,10 +18,17 @@ class Admin extends CI_Controller {
 	}
 	public function index(){
 		if ($this->check_privilege() == true) {
-			$data['page_title'] = 'Dashboard';
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/index');
-			$this->load->view('admin/footer');
+			// $data['page_title'] = 'Manajemen Barang';
+			// $data['inventory'] = $this->db_query->getData('barang');
+			$this->db->select('barang.id,barang.kode_barang,barang.nama_barang,stock.quantity');
+			$this->db->from('stock');
+			$this->db->join('barang', 'barang.id = stock.id_barang');
+			$query = $this->db->get();
+			$data['inventory'] = $query->result_array();
+
+			$this->load->view('inventory/header', $data);
+			$this->load->view('inventory/index');
+			$this->load->view('inventory/footer');
 		}
 	}
 

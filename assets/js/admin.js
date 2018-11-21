@@ -1,10 +1,10 @@
 function filter() {
 // Declare variables 
-	var input, filter, table, tr, td, i;
-	input = document.getElementById("filter");
-	filter = input.value.toUpperCase();
-	table = document.getElementById("tabel_user");
-	tr = table.getElementsByTagName("tr");
+var input, filter, table, tr, td, i;
+input = document.getElementById("filter");
+filter = input.value.toUpperCase();
+table = document.getElementById("tabel_user");
+tr = table.getElementsByTagName("tr");
 
 	// Loop through all table rows, and hide those who don't match the search query
 	for (i = 0; i < tr.length; i++) {
