@@ -7,7 +7,8 @@ Class Db_query extends CI_Model {
 	}
 	
 	public function insertData($tabel, $data){
-		return $this->db->insert($tabel, $data);
+		$this->db->insert($tabel, $data);
+		return $this->db->insert_id();
 	}
 
 	public function delete($tabel, $where, $param){

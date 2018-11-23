@@ -18,11 +18,21 @@ class Inventory extends CI_Controller {
 	}
 	public function index(){
 		if ($this->check_privilege() == true) {
-			// $data['page_title'] = 'Manajemen Barang';
-			// $data['inventory'] = $this->db_query->getData('barang');
-			$this->db->select('barang.id,barang.kode_barang,barang.nama_barang,stock.quantity');
-			$this->db->from('stock');
-			$this->db->join('barang', 'barang.id = stock.id_barang');
+			$data['page_title'] = 'Manajemen Barang';
+			$this->db->select('
+				barang.id,
+				barang.kode_barang,
+				barang.nama_barang,
+				barang.keterangan_barang,
+				stock.initial_quantity,
+				stock.quantity,
+				tipe_barang.tipe_barang,
+				kondisi_barang.kondisi_barang
+				');
+			$this->db->from('barang');
+			$this->db->join('stock', 'barang.id = stock.id_barang');
+			$this->db->join('tipe_barang', 'barang.tipe_barang = tipe_barang.id');
+			$this->db->join('kondisi_barang', 'barang.kondisi_barang = kondisi_barang.id');
 			$query = $this->db->get();
 			$data['inventory'] = $query->result_array();
 
@@ -32,27 +42,39 @@ class Inventory extends CI_Controller {
 		}
 	}
 
-	public function users()
+	public function add()
 	{
 		if ($this->check_privilege() == true) {
 			$data['page_title'] = 'Manajemen User';
 			$data['users'] = $this->db_query->getData('users');
 
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/users');
-			$this->load->view('admin/footer');
+			$this->load->view('inventory/header', $data);
+			$this->load->view('inventory/TambahBarang');
+			$this->load->view('inventory/footer');
 		}
 	}
-	public function adduser()
+	public function submitbrg()
 	{
 		if ($this->check_privilege() == true) {
-			$data['user_rname'] = $this->input->post('nama');
-			$data['user_login'] = $this->input->post('username');
-			$data['user_email'] = $this->input->post('email');
-			$data['user_pass'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-			$data['user_role'] = '2';
-			$this->db_query->insertData('users', $data);
-			redirect('admin/users','refresh');
+			$barang['kode_barang'] = $this->input->post('kode-brg');
+			$barang['nama_barang'] = $this->input->post('nama-brg');
+			$barang['tipe_barang'] = $this->input->post('tipe-brg');
+			$barang['jumlah_barang'] = $this->input->post('jml-brg');
+			$barang['kondisi_barang'] = $this->input->post('kondisi-brg');
+
+			$id_barang = $this->db_query->insertData('barang', $barang);
+
+			$stock['id_barang'] = $id_barang;
+			$stock['initial_quantity'] = $this->input->post('jml-brg');
+			$this->db_query->insertData('stock', $stock);
+
+			// $data['user_rname'] = $this->input->post('nama');
+			// $data['user_login'] = $this->input->post('username');
+			// $data['user_email'] = $this->input->post('email');
+			// $data['user_pass'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			// $data['user_role'] = '2';
+			// $this->db_query->insertData('users', $data);
+			// redirect('admin/users','refresh');
 		}
 	}
 
