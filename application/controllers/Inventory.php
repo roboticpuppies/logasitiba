@@ -66,24 +66,21 @@ class Inventory extends CI_Controller {
 
 			$stock['id_barang'] = $id_barang;
 			$stock['initial_quantity'] = $this->input->post('jml-brg');
+			$stock['quantity'] = $this->input->post('jml-brg');
 			$this->db_query->insertData('stock', $stock);
-
-			// $data['user_rname'] = $this->input->post('nama');
-			// $data['user_login'] = $this->input->post('username');
-			// $data['user_email'] = $this->input->post('email');
-			// $data['user_pass'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-			// $data['user_role'] = '2';
-			// $this->db_query->insertData('users', $data);
-			// redirect('admin/users','refresh');
+			redirect('inventory/','refresh');
 		}
 	}
 
-	public function deleteUser(){
+	public function deletebrg(){
 		if ($this->check_privilege() == true) {
 			$param = $this->uri->segment(3);
-			$tabel = 'users';
-			$where = 'ID';
-			$this->db_query->delete($tabel, $where, $param);
+
+			$this->db->query('DELETE barang,stock FROM barang,stock WHERE barang.id=stock.id_barang AND barang.id=' . $param);
+
+			// $tabel = 'barang';
+			// $where = 'ID';
+			// $this->db_query->delete($tabel, $where, $param);
 		}
 	}
 
@@ -91,7 +88,7 @@ class Inventory extends CI_Controller {
 	{
 		if ($this->check_privilege() == true) {
 			$param = $_GET['id'];
-			$query = $this->db->get_where('users', array('ID' => $param));
+			$query = $this->db->get_where('barang', array('ID' => $param));
 			$response = $query->result_array();
 			echo json_encode($response);
 		}

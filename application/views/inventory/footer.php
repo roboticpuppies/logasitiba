@@ -10,51 +10,49 @@
 	});
 </script>
 <script src="<?php echo base_url('assets/js/admin.js') ?>"></script>
-<?php if ($this->uri->segment(2) == "users"): ?>
-	<script>
-		$(document).ready(function(){
-			$('select#option').change(function(){
-				var val = $(this).val();
-				var id = $(this).attr('data-id');
-				if(val == 'hapus'){
-					var i = confirm('Hapus data ini?');
-					if(i == true) {
-						$.ajax({
-							type: 'POST',
-							url: '<?= base_url('admin/deleteUser') ?>' + '/' + id,
-							cache: false,
-							success: function(e){
-								M.toast({html: 'Berhasil dihapus.', displayLength: 5000});
-								location.reload();
-							},
-							error: function(){
-								M.toast({html: 'Gagal menghapus.',displayLength: 3000});
-							}
-						});
-					}
-				}
-				else if(val == 'preview'){
-					$('#preview').modal({onOpenEnd: $('select#option').val('')});
-					$('#preview').modal('open');
+<script>
+	$(document).ready(function(){
+		$('select#option').change(function(){
+			var val = $(this).val();
+			var id = $(this).attr('data-id');
+			if(val == 'hapus'){
+				var i = confirm('Hapus data ini?');
+				if(i == true) {
 					$.ajax({
 						type: 'POST',
-						url: '<?= base_url('admin/preview') . "?id=" ?>' + id,
-						dataType: "json",
+						url: '<?= base_url('inventory/deletebrg') ?>' + '/' + id,
+						cache: false,
 						success: function(e){
-							$('#user_id2').val(e[0].ID);
-							$('#username2').val(e[0].user_login);
-							$('#nama2').val(e[0].user_rname);
-							$('#email2').val(e[0].user_email);
-							console.log(e);
+							M.toast({html: 'Berhasil dihapus.', displayLength: 5000});
+							location.reload();
 						},
-						error: function(e){
-							$('#judul').text('AJAX Call Failed');
-							console.log(e);
+						error: function(){
+							M.toast({html: 'Gagal menghapus.',displayLength: 3000});
 						}
 					});
 				}
-			});
+			}
+			else if(val == 'preview'){
+				$('#preview').modal({onOpenEnd: $('select#option').val('')});
+				$('#preview').modal('open');
+				$.ajax({
+					type: 'POST',
+					url: '<?= base_url('inventory/preview') . "?id=" ?>' + id,
+					dataType: "json",
+					success: function(e){
+						$('#kode-brg').val(e[0].kode_barang);
+						$('#nama-brg').val(e[0].nama_barang);
+						$('#tipe-brg').val(e[0].tipe_barang);
+						$('#jml-brg').val(e[0].jumlah_barang);
+						console.log(e);
+					},
+					error: function(e){
+						$('#judul').text('AJAX Call Failed');
+						console.log(e);
+					}
+				});
+			}
 		});
-	</script>
-<?php endif ?>
+	});
+</script>
 </html>

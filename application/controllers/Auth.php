@@ -44,6 +44,7 @@ class Auth extends CI_Controller {
 			if (password_verify($user_pass,$result->user_pass)) {
 				$sess_data = array(
 					'logged_in' => TRUE,
+					'user_id'	=> $result->ID,
 					'username' 	=> $result->user_login,
 					'role'		=> $result->user_role
 				);
