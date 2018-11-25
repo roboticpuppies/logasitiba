@@ -27,7 +27,7 @@ class Auth extends CI_Controller {
 		}
 	}
 
-	public function do_login()
+	public function login_adm()
 	{
 		$user_login = $this->input->post('username');
 		$user_pass = $this->input->post('password');
@@ -59,10 +59,6 @@ class Auth extends CI_Controller {
 					redirect('laboran/','refresh');
 					break;
 
-					case '3':
-					redirect('member/','refresh');
-					break;
-
 					default:
 					echo "Error";
 					break;
@@ -79,5 +75,32 @@ class Auth extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		redirect('auth/','refresh');
+	}
+
+	public function login_member()
+	{
+		$user_login = $this->input->post('username_member');
+		$user_pass = $this->input->post('password_member');
+
+		$this->db->from('member');
+		$this->db->where('username', $user_login);
+		$result = $this->db->get()->row();
+
+		if (count($result) < 1) {
+			$this->session->set_flashdata( 'message', 'Username tidak terdaftar.' );
+			redirect('auth/','refresh');
+		}
+		else {
+			if (password_verify($user_pass,$result->password)) {
+				$sess_data = array(
+					'logged_in' => TRUE,
+					'user_id'	=> $result->id,
+					'username' 	=> $result->username,
+					'role'		=> '3'
+				);
+				$this->session->set_userdata($sess_data);
+				redirect('member/','refresh');
+			}
+		}
 	}
 }

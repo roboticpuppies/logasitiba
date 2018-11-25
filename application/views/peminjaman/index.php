@@ -25,10 +25,13 @@
 						<td><?= $barang['nama_barang'] ?></td>
 						<td><?= $barang['quantity'] ?></td>
 						<td><?= $barang['tgl_pinjam'] ?></td>
-						<td><a href="#" class="waves-effect btn blue darken-2" data-id="<?= $barang['id'] ?>">Kembalikan</a></td>
+						<td><a href="<?= 'peminjaman/kembalikan/' . $barang['id'] ?>" class="waves-effect btn blue darken-2">Kembalikan</a></td>
 					</tr>
 				<?php endforeach ?>
 			</tbody>
 		</table>
+		<pre>
+			<?php var_dump($inventory) ?>
+		</pre>
 	</div>
 </main>

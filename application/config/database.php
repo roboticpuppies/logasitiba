@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'axe.jagoanhosting.com',
-	'username' => 'kyonekoc_logasitiba',
-	'password' => 'Password123!@#',
-	'database' => 'kyonekoc_logasitiba',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'sionlap',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

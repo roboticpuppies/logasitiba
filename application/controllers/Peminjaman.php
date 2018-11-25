@@ -7,6 +7,7 @@ class Peminjaman extends CI_Controller {
 			member.id,
 			member.nama,
 			barang.nama_barang,
+			peminjaman.id,
 			peminjaman.quantity,
 			peminjaman.tgl_pinjam
 			');
@@ -23,5 +24,13 @@ class Peminjaman extends CI_Controller {
 		$this->load->view('peminjaman/footer');
 
 		// Now playing : TWICE - Don't Give Up
+	}
+	public function kembalikan()
+	{
+		$id = $this->uri->segment(3);
+		// $query = $this->db->get_where('peminjaman', array('id' => $id));
+		$logger = $this->db->query("INSERT INTO log_peminjaman (id,id_member,id_barang,tgl_pinjam,quantity,id_user) SELECT id,id_member,id_barang,tgl_pinjam,quantity,id_user FROM peminjaman WHERE id = $id");
+		$delete_record = $this->db->delete('peminjaman', array('id' => $id));
+		redirect('peminjaman','refresh');
 	}
 }
