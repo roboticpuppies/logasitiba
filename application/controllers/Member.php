@@ -28,13 +28,12 @@ class Member extends CI_Controller {
 	{
 		$data['id_member'] = $this->session->userdata['user_id'];
 		$data['id_barang'] = $this->input->post('id');
-		$data['quantity'] = $this->input->post('jml-brg');
+		$data['quantity'] = $this->input->post('jml_brg');
 
 		$this->db->insert('peminjaman', $data);
 
 		$this->db->set('quantity', 'quantity - ' . $data['quantity'] , FALSE);
 		$this->db->where('id_barang', $data['id_barang']);
 		$this->db->update('stock');
-		echo $this->db->last_query();
 	}
 }

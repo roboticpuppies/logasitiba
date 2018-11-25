@@ -10,51 +10,37 @@
 	});
 </script>
 <script src="<?php echo base_url('assets/js/peminjaman.js') ?>"></script>
-<?php if ($this->uri->segment(2) == "users"): ?>
+<?php if ($this->uri->segment(2) !== "log" ): ?>
 	<script>
-		$(document).ready(function(){
-			$('select#option').change(function(){
-				var val = $(this).val();
-				var id = $(this).attr('data-id');
-				if(val == 'hapus'){
-					var i = confirm('Hapus data ini?');
-					if(i == true) {
-						$.ajax({
-							type: 'POST',
-							url: '<?= base_url('admin/deleteUser') ?>' + '/' + id,
-							cache: false,
-							success: function(e){
-								M.toast({html: 'Berhasil dihapus.', displayLength: 5000});
-								location.reload();
-							},
-							error: function(){
-								M.toast({html: 'Gagal menghapus.',displayLength: 3000});
-							}
-						});
+	var id_member, id_peminjaman;
+	$(document).ready(function(){
+		$('a#kembali').click(function(){
+			var i = confirm('Kembalikan barang?');
+			if(i == true) {
+				id_member = $('a#kembali').attr('data-id-member');
+				id_peminjaman = $('a#kembali').attr('data-id-peminjaman');
+				id_barang = $('a#kembali').attr('data-id-barang');
+
+				$.ajax({
+					type: 'POST',
+					data: {id_member: id_member, id_peminjaman: id_peminjaman, id_barang: id_barang},
+					url: '<?= base_url('peminjaman/kembalikan') ?>',
+					cache: false,
+					success: function(e){
+						M.toast({html: 'Barang berhasil dikembalikan.', displayLength: 2000});
+						setTimeout(function() {
+							location.reload();
+							// $('table#tabel_barang').load('http://[::1]/logasitiba/peminjaman #tabel_peminjaman');
+						}, 1000);
+					},
+					error: function(){
+						M.toast({html: 'Gagal menghapus.',displayLength: 3000});
 					}
-				}
-				else if(val == 'preview'){
-					$('#preview').modal({onOpenEnd: $('select#option').val('')});
-					$('#preview').modal('open');
-					$.ajax({
-						type: 'POST',
-						url: '<?= base_url('admin/preview') . "?id=" ?>' + id,
-						dataType: "json",
-						success: function(e){
-							$('#user_id2').val(e[0].ID);
-							$('#username2').val(e[0].user_login);
-							$('#nama2').val(e[0].user_rname);
-							$('#email2').val(e[0].user_email);
-							console.log(e);
-						},
-						error: function(e){
-							$('#judul').text('AJAX Call Failed');
-							console.log(e);
-						}
-					});
-				}
-			});
+				});
+			}
 		});
-	</script>
+	});
+</script>
 <?php endif ?>
+
 </html>

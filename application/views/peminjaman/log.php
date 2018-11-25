@@ -1,7 +1,6 @@
 <main>
 	<div class="container">
-		<h5 class="light">Daftar Peminjaman</h5>
-		<p class="grey-text">Daftar semua barang yang dipinjam</p>
+		<h5 class="light">Daftar Log Peminjaman</h5>
 		<br>
 		<label>
 			<input name="group1" type="radio" class="with-gap" value="1" checked />
@@ -22,7 +21,7 @@
 					<th>Nama Barang</th>
 					<th>Jumlah Barang</th>
 					<th>Tanggal Pinjam</th>
-					<th>&nbsp;</th>
+					<th>Tanggal Kembali</th>
 				</tr>
 			</thead>
 
@@ -34,7 +33,7 @@
 					<td><?= $barang['nama_barang'] ?></td>
 					<td><?= $barang['quantity'] ?></td>
 					<td><?= $barang['tgl_pinjam'] ?></td>
-					<td><a href="#" id="kembali" data-id-member="<?= $barang['member_id'] ?>" data-id-peminjaman="<?= $barang['id'] ?>" data-id-barang="<?= $barang['barang_id'] ?>" class="waves-effect btn blue darken-2">Kembalikan</a></td>
+					<td><?= $barang['tgl_kembali'] ?></td>
 				</tr>
 			<?php endforeach ?>
 		</tbody>
