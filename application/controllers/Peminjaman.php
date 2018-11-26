@@ -16,12 +16,13 @@ class Peminjaman extends CI_Controller {
 		$this->db->from('peminjaman');
 		$this->db->join('barang', 'peminjaman.id_barang = barang.id');
 		$this->db->join('member', 'peminjaman.id_member = member.id');
+		$this->db->where('approved', 1);
 		
 		$query = $this->db->get();
 		$data['page_title'] = "Daftar Peminjaman";
 		$data['inventory'] = $query->result_array();
 		
-		$this->load->view('peminjaman/header', $data);
+		$this->load->view('admin/header', $data);
 		$this->load->view('peminjaman/index');
 		$this->load->view('peminjaman/footer');
 
@@ -34,13 +35,10 @@ class Peminjaman extends CI_Controller {
 		$id_barang = $this->input->post('id_barang');
 		
 		$logger = $this->db->query("INSERT INTO log_peminjaman (id,id_member,id_barang,tgl_pinjam,quantity,id_user) SELECT id,id_member,id_barang,tgl_pinjam,quantity,id_user FROM peminjaman WHERE id = $id");
-		echo "Query logger = " . $this->db->last_query();
 		
 		$add_quantity = $this->db->query("UPDATE stock INNER JOIN peminjaman ON peminjaman.id_barang = stock.id_barang SET stock.quantity = stock.quantity + peminjaman.quantity WHERE peminjaman.id_member = $id_member AND stock.id_barang = $id_barang");
-		echo "Query Add quantity = " . $this->db->last_query();
 		
 		$delete_record = $this->db->delete('peminjaman', array('id' => $id));
-		echo "Delete Record = " . $this->db->last_query();
 	}
 
 	public function log()
@@ -62,8 +60,41 @@ class Peminjaman extends CI_Controller {
 		$data['page_title'] = "Daftar Log Peminjaman";
 		$data['inventory'] = $query->result_array();
 		
-		$this->load->view('peminjaman/header', $data);
+		$this->load->view('admin/header', $data);
 		$this->load->view('peminjaman/log');
 		$this->load->view('peminjaman/footer');
+	}
+
+	public function waiting_approval()
+	{
+		$this->load->helper('url');
+		$this->db->select('
+			member.id as member_id,
+			member.nama,
+			barang.nama_barang,
+			barang.id as barang_id,
+			peminjaman.id,
+			peminjaman.quantity,
+			peminjaman.tgl_pinjam
+			');
+		$this->db->from('peminjaman');
+		$this->db->join('barang', 'peminjaman.id_barang = barang.id');
+		$this->db->join('member', 'peminjaman.id_member = member.id');
+		$this->db->where('approved', 0);
+		
+		$query = $this->db->get();
+		$data['page_title'] = "Daftar Waiting Approval";
+		$data['inventory'] = $query->result_array();
+		
+		$this->load->view('admin/header', $data);
+		$this->load->view('peminjaman/approval');
+		$this->load->view('peminjaman/footer');
+	}
+
+	public function approve()
+	{
+		$param = $this->input->post('id_peminjaman');
+		$data['approved'] = 1;
+		$this->db->update('peminjaman', $data, array('id' => $param));
 	}
 }

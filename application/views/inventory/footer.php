@@ -24,7 +24,9 @@
 						cache: false,
 						success: function(e){
 							M.toast({html: 'Berhasil dihapus.', displayLength: 5000});
-							location.reload();
+							setTimeout(function() {
+								location.reload();
+							}, 1000);
 						},
 						error: function(){
 							M.toast({html: 'Gagal menghapus.',displayLength: 3000});

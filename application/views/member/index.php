@@ -97,11 +97,10 @@
 					M.toast({html: 'Barang berhasil dipinjam.', displayLength: 2000});
 					setTimeout(function() {
 						location.reload();
-						// $('table#tabel_barang').load('http://[::1]/logasitiba/member/ #tabel_barang');
-					}, 2000);
+					}, 1000);
 				},
 				error: function(){
-					M.toast({html: 'Gagal menghapus.',displayLength: 3000});
+					M.toast({html: 'Gagal menghapus.',displayLength: 2000});
 				}
 			});
 		});

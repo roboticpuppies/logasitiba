@@ -36,6 +36,19 @@ class Admin extends CI_Controller {
 			$this->load->view('admin/footer');
 		}
 	}
+
+	public function member()
+	{
+		if ($this->check_privilege() == true) {
+			$data['page_title'] = 'Manajemen Member';
+			$data['users'] = $this->db_query->getData('member');
+
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/member');
+			$this->load->view('admin/footer');
+		}
+	}
+
 	public function adduser()
 	{
 		if ($this->check_privilege() == true) {
@@ -49,11 +62,32 @@ class Admin extends CI_Controller {
 		}
 	}
 
+	public function addmember()
+	{
+		if ($this->check_privilege() == true) {
+			$data['nama'] 		= $this->input->post('nama');
+			$data['username'] 	= $this->input->post('username');
+			$data['email'] 		= $this->input->post('email');
+			$data['password'] 	= password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			$data['user_role'] 	= '3';
+			
+			$this->db_query->insertData('member', $data);
+			redirect('admin/member','refresh');
+		}
+	}
+
 	public function deleteUser(){
 		if ($this->check_privilege() == true) {
-			$param = $this->uri->segment(3);
-			$tabel = 'users';
-			$where = 'ID';
+			$section = $this->input->post('section');
+			$param = $this->input->post('id');
+			if ($section == "users") {
+				$tabel = 'users';
+				$where = 'ID';
+			}
+			else {
+				$tabel = 'member';
+				$where = 'id';
+			}
 			$this->db_query->delete($tabel, $where, $param);
 		}
 	}

@@ -1,7 +1,7 @@
 <main>
 	<div class="container">
 		<h5 class="light">Manajemen Barang</h5>
-		<a href="add" class="waves-effect waves-teal btn-flat blue-text right"><i class="material-icons left blue-text">add_box</i>Tambah Laboran</a>
+		<a href="add" class="waves-effect waves-teal btn-flat blue-text right"><i class="material-icons left blue-text">add_box</i>Tambah Barang</a>
 		<p class="grey-text">List semua barang. Barang bisa ditambah, diedit, dan dihapus dari halaman ini.</p>
 
 

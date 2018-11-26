@@ -36,7 +36,7 @@ class Inventory extends CI_Controller {
 			$query = $this->db->get();
 			$data['inventory'] = $query->result_array();
 
-			$this->load->view('inventory/header', $data);
+			$this->load->view('admin/header', $data);
 			$this->load->view('inventory/index');
 			$this->load->view('inventory/footer');
 		}
@@ -48,7 +48,7 @@ class Inventory extends CI_Controller {
 			$data['page_title'] = 'Manajemen User';
 			$data['users'] = $this->db_query->getData('users');
 
-			$this->load->view('inventory/header', $data);
+			$this->load->view('admin/header', $data);
 			$this->load->view('inventory/TambahBarang');
 			$this->load->view('inventory/footer');
 		}
@@ -77,10 +77,6 @@ class Inventory extends CI_Controller {
 			$param = $this->uri->segment(3);
 
 			$this->db->query('DELETE barang,stock FROM barang,stock WHERE barang.id=stock.id_barang AND barang.id=' . $param);
-
-			// $tabel = 'barang';
-			// $where = 'ID';
-			// $this->db_query->delete($tabel, $where, $param);
 		}
 	}
 

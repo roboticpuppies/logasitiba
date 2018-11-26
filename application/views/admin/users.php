@@ -1,7 +1,7 @@
 <main>
 	<div class="container">
 		<h5 class="light">Manajemen Laboran</h5>
-		<a href="#add_user" class="waves-effect waves-teal btn-flat blue-text right modal-trigger" data-target="add_user"><i class="material-icons left blue-text">add_box</i>Tambah Laboran</a>
+		<a href="#add_user" class="waves-effect waves-teal btn-flat blue-text right modal-trigger" data-target="add_user"><i class="material-icons left blue-text">add_box</i>Tambah</a>
 		<p class="grey-text">List semua laboran. User laboran bisa dihapus maupun diedit. Namun user admin tidak bisa dihapus.</p>
 
 		<div id="add_user" class="modal">
