@@ -101,6 +101,10 @@ class Auth extends CI_Controller {
 				$this->session->set_userdata($sess_data);
 				redirect('member/','refresh');
 			}
+			else {
+				$this->session->set_flashdata( 'message', 'Password salah.' );
+				redirect('auth/','refresh');
+			}
 		}
 	}
 }

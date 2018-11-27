@@ -1,7 +1,7 @@
 <main>
 	<div class="container">
-		<h5 class="light">Daftar Peminjaman</h5>
-		<p class="grey-text">Daftar semua barang yang dipinjam</p>
+		<h5 class="light">Waiting Approval</h5>
+		<p class="grey-text">Daftar barang yang menunggu disetujui untuk dipinjam.</p>
 		<br>
 		<label>
 			<input name="group1" type="radio" class="with-gap" value="1" checked />

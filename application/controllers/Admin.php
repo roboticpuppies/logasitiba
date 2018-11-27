@@ -28,7 +28,7 @@ class Admin extends CI_Controller {
 	public function users()
 	{
 		if ($this->check_privilege() == true) {
-			$data['page_title'] = 'Manajemen User';
+			$data['page_title'] = 'Manajemen Laboran';
 			$data['users'] = $this->db_query->getData('users');
 
 			$this->load->view('admin/header', $data);

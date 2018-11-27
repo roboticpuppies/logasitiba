@@ -19,7 +19,7 @@ class Peminjaman extends CI_Controller {
 		$this->db->where('approved', 1);
 		
 		$query = $this->db->get();
-		$data['page_title'] = "Daftar Peminjaman";
+		$data['page_title'] = "Daftar Peminjaman Barang";
 		$data['inventory'] = $query->result_array();
 		
 		$this->load->view('admin/header', $data);
