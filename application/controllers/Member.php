@@ -74,12 +74,12 @@ class Member extends CI_Controller {
 			$this->db->join('member', 'peminjaman.id_member = member.id');
 			$this->db->where('approved', 0);
 			$this->db->where('id_member', $this->session->userdata['user_id']);
-			
+
 			$query = $this->db->get();
 			$data['page_title'] = "Daftar Waiting Approval";
 			$data['subtitle'] = "Daftar barang yang menunggu disetujui untuk dipinjam.";
 			$data['inventory'] = $query->result_array();
-			
+
 			$this->load->view('member/header', $data);
 			$this->load->view('member/approval');
 			$this->load->view('member/footer');
@@ -102,12 +102,12 @@ class Member extends CI_Controller {
 			$this->db->join('member', 'peminjaman.id_member = member.id');
 			$this->db->where('approved', 1);
 			$this->db->where('id_member', $this->session->userdata['user_id']);
-			
+
 			$query = $this->db->get();
 			$data['page_title'] = "Daftar Barang yang Dipinjam";
 			$data['subtitle'] = "Daftar semua barang yang saat ini sedang dipinjam.";
 			$data['inventory'] = $query->result_array();
-			
+
 			$this->load->view('member/header', $data);
 			$this->load->view('member/approval');
 			$this->load->view('member/footer');
@@ -131,14 +131,15 @@ class Member extends CI_Controller {
 			$this->db->join('barang', 'log_reject.id_barang = barang.id');
 			$this->db->join('member', 'log_reject.id_member = member.id');
 			$this->db->where('log_reject.id_member', $id_member);		
-			
+
 			$query = $this->db->get();
 			$data['page_title'] = "Daftar Peminjaman yang Ditolak";
+			$data['subtitle'] = "Daftar peminjaman yang tidak disetujui.";
 			$data['inventory'] = $query->result_array();
-			
-			$this->load->view('admin/header', $data);
-			$this->load->view('peminjaman/reject');
-			$this->load->view('peminjaman/footer');
+
+			$this->load->view('member/header', $data);
+			$this->load->view('member/approval');
+			$this->load->view('member/footer');
 		}
 	}
 }
