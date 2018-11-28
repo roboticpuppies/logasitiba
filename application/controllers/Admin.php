@@ -80,13 +80,12 @@ class Admin extends CI_Controller {
 		if ($this->check_privilege() == true) {
 			$section = $this->input->post('section');
 			$param = $this->input->post('id');
+			$where = 'id';
 			if ($section == "users") {
 				$tabel = 'users';
-				$where = 'ID';
 			}
 			else {
 				$tabel = 'member';
-				$where = 'id';
 			}
 			$this->db_query->delete($tabel, $where, $param);
 		}
@@ -95,8 +94,9 @@ class Admin extends CI_Controller {
 	public function preview()
 	{
 		if ($this->check_privilege() == true) {
-			$param = $_GET['id'];
-			$query = $this->db->get_where('users', array('ID' => $param));
+			$param = $this->input->post('id');
+			$section = $this->input->post('section');
+			$query = $this->db->get_where($section, array('id' => $param));
 			$response = $query->result_array();
 			echo json_encode($response);
 		}
@@ -104,22 +104,39 @@ class Admin extends CI_Controller {
 
 	public function edituser(){
 		if ($this->check_privilege() == true) {
+			$section = $this->input->post('section');
 			$param = $this->input->post('user_id2');
-			if ($this->input->post('password2') == '') {
-				$data['user_rname'] = $this->input->post('nama2');
-				$data['user_login'] = $this->input->post('username2');
-				$data['user_email'] = $this->input->post('email2');
+
+			if ($section == "users") {
+				if ($this->input->post('password2') == '') {
+					$data['user_rname'] = $this->input->post('nama2');
+					$data['user_login'] = $this->input->post('username2');
+					$data['user_email'] = $this->input->post('email2');
+				}
+				else {
+					$data['user_rname'] = $this->input->post('nama2');
+					$data['user_login'] = $this->input->post('username2');
+					$data['user_email'] = $this->input->post('email2');
+					$data['user_pass'] = $this->input->post('password2');
+				}
 			}
 			else {
-				$data['user_rname'] = $this->input->post('nama2');
-				$data['user_login'] = $this->input->post('username2');
-				$data['user_email'] = $this->input->post('email2');
-				$data['user_pass'] = $this->input->post('password2');
+				if ($this->input->post('password2') == '') {
+					$data['nama'] = $this->input->post('nama2');
+					$data['username'] = $this->input->post('username2');
+					$data['email'] = $this->input->post('email2');
+				}
+				else {
+					$data['nama'] = $this->input->post('nama2');
+					$data['username'] = $this->input->post('username2');
+					$data['email'] = $this->input->post('email2');
+					$data['password'] = $this->input->post('password2');
+				}
 			}
 
-			$this->db->update('users', $data, array('ID' => $param));
+			$this->db->update($section, $data, array('id' => $param));
 
-			redirect('admin/users/' ,'refresh');
+			redirect('admin/' . $section ,'refresh');
 		}
 	}
 

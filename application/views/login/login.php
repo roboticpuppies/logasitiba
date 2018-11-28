@@ -18,7 +18,7 @@
 			<div class="col s5 m5 l5" >
 				<ul class="tabs">
 					<li class="tab col s3"><a href="#login">Admin</a></li>
-					<li class="tab col s3"><a href="#register">Member</a></li>
+					<li class="tab col s3"><a href="#member">Member</a></li>
 				</ul>
 				<div id="login" class="col s12">
 					<h5 class="light">Sign In</h5>
@@ -37,7 +37,7 @@
 						<button class="btn blue darken-3 waves-effect waves-light right" id="send" type="submit">Sign In</button>
 					</form>
 				</div>
-				<div id="register" class="col s12">
+				<div id="member" class="col s12">
 					<h5 class="light">Sign In</h5>
 					<form id="formLogin" action="<?php echo base_url('auth/login_member'); ?>" method="POST">
 						<div class="input-field">
@@ -48,7 +48,7 @@
 							<input id="password_member" type="password" class="validate" name="password_member" required>
 							<label for="password_member">Password</label>
 						</div>
-						<button class="btn blue darken-3 waves-effect waves-light right" id="send" type="submit">Register</button>
+						<button class="btn blue darken-3 waves-effect waves-light right" id="send" type="submit">Sign In</button>
 					</form>
 				</div>
 			</div>

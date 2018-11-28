@@ -34,11 +34,12 @@ class Peminjaman extends CI_Controller {
 		$id_member = $this->input->post('id_member');
 		$id_barang = $this->input->post('id_barang');
 		
-		$logger = $this->db->query("INSERT INTO log_peminjaman (id,id_member,id_barang,tgl_pinjam,quantity,id_user) SELECT id,id_member,id_barang,tgl_pinjam,quantity,id_user FROM peminjaman WHERE id = $id");
+		$logger = $this->db->query("INSERT INTO log_peminjaman (id,id_member,id_barang,tgl_pinjam,quantity,id_user,approved) SELECT id,id_member,id_barang,tgl_pinjam,quantity,id_user,approved FROM peminjaman WHERE id = $id");
 		
-		$add_quantity = $this->db->query("UPDATE stock INNER JOIN peminjaman ON peminjaman.id_barang = stock.id_barang SET stock.quantity = stock.quantity + peminjaman.quantity WHERE peminjaman.id_member = $id_member AND stock.id_barang = $id_barang");
+		$add_quantity = $this->db->query("UPDATE stock INNER JOIN peminjaman ON peminjaman.id_barang = stock.id_barang SET stock.quantity = stock.quantity + peminjaman.quantity WHERE peminjaman.id_member = $id_member AND stock.id_barang = $id_barang AND peminjaman.id = $id");
 		
 		$delete_record = $this->db->delete('peminjaman', array('id' => $id));
+
 	}
 
 	public function log()
@@ -67,7 +68,6 @@ class Peminjaman extends CI_Controller {
 
 	public function waiting_approval()
 	{
-		$this->load->helper('url');
 		$this->db->select('
 			member.id as member_id,
 			member.nama,
@@ -96,5 +96,45 @@ class Peminjaman extends CI_Controller {
 		$param = $this->input->post('id_peminjaman');
 		$data['approved'] = 1;
 		$this->db->update('peminjaman', $data, array('id' => $param));
+	}
+
+	public function tolak()
+	{
+		$id = $this->input->post('id_peminjaman');
+		$id_member = $this->input->post('id_member');
+		$id_barang = $this->input->post('id_barang');
+		$data['approved'] = 2;
+
+		$this->db->update('peminjaman', $data, array('id' => $id));
+		
+		$logger = $this->db->query("INSERT INTO log_reject (id,id_member,id_barang,tgl_pinjam,quantity,id_user,approved) SELECT id,id_member,id_barang,tgl_pinjam,quantity,id_user,approved FROM peminjaman WHERE id = $id");
+		
+		$add_quantity = $this->db->query("UPDATE stock INNER JOIN peminjaman ON peminjaman.id_barang = stock.id_barang SET stock.quantity = stock.quantity + peminjaman.quantity WHERE peminjaman.id_member = $id_member AND stock.id_barang = $id_barang AND peminjaman.id = $id");
+		
+		$delete_record = $this->db->delete('peminjaman', array('id' => $id));
+	}
+
+	public function rejected()
+	{
+		$this->db->select('
+			member.id,
+			member.nama,
+			barang.nama_barang,
+			log_reject.id,
+			log_reject.quantity,
+			log_reject.tgl_pinjam,
+			log_reject.tgl_kembali
+			');
+		$this->db->from('log_reject');
+		$this->db->join('barang', 'log_reject.id_barang = barang.id');
+		$this->db->join('member', 'log_reject.id_member = member.id');
+		
+		$query = $this->db->get();
+		$data['page_title'] = "Daftar Peminjaman yang Ditolak";
+		$data['inventory'] = $query->result_array();
+		
+		$this->load->view('admin/header', $data);
+		$this->load->view('peminjaman/reject');
+		$this->load->view('peminjaman/footer');
 	}
 }

@@ -91,4 +91,30 @@ class Member extends CI_Controller {
 		$this->load->view('member/approval');
 		$this->load->view('member/footer');
 	}
+
+	public function rejected()
+	{
+		$id_member = $this->session->userdata['user_id'];
+		$this->db->select('
+			member.id,
+			member.nama,
+			barang.nama_barang,
+			log_reject.id,
+			log_reject.quantity,
+			log_reject.tgl_pinjam,
+			log_reject.tgl_kembali
+			');
+		$this->db->from('log_reject');
+		$this->db->join('barang', 'log_reject.id_barang = barang.id');
+		$this->db->join('member', 'log_reject.id_member = member.id');
+		$this->db->where('log_reject.id_member', $id_member);		
+		
+		$query = $this->db->get();
+		$data['page_title'] = "Daftar Peminjaman yang Ditolak";
+		$data['inventory'] = $query->result_array();
+		
+		$this->load->view('admin/header', $data);
+		$this->load->view('peminjaman/reject');
+		$this->load->view('peminjaman/footer');
+	}
 }

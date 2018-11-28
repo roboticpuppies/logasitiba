@@ -36,7 +36,7 @@
 					}, 1000);
 				},
 				error: function(){
-					M.toast({html: 'Gagal menghapus.',displayLength: 2000});
+					M.toast({html: 'Gagal meminjam.',displayLength: 2000});
 				}
 			});
 		});

@@ -9,7 +9,7 @@
 		$('.modal').modal();
 	});
 </script>
-<script src="<?php echo base_url('assets/js/admin.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/peminjaman.js') ?>"></script>
 <script>
 	$(document).ready(function(){
 		$('select#option').change(function(){
@@ -35,24 +35,7 @@
 				}
 			}
 			else if(val == 'preview'){
-				$('#preview').modal({onOpenEnd: $('select#option').val('')});
-				$('#preview').modal('open');
-				$.ajax({
-					type: 'POST',
-					url: '<?= base_url('inventory/preview') . "?id=" ?>' + id,
-					dataType: "json",
-					success: function(e){
-						$('#kode-brg').val(e[0].kode_barang);
-						$('#nama-brg').val(e[0].nama_barang);
-						$('#tipe-brg').val(e[0].tipe_barang);
-						$('#jml-brg').val(e[0].jumlah_barang);
-						console.log(e);
-					},
-					error: function(e){
-						$('#judul').text('AJAX Call Failed');
-						console.log(e);
-					}
-				});
+				window.location = "<?= base_url('inventory/editbrg/') ?>" + id;
 			}
 		});
 	});

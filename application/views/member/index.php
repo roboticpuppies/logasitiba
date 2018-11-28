@@ -44,12 +44,12 @@
 	</table>
 </div>
 <div id="modal1" class="modal">
-	<form method="post" action="javascript:alert( 'success!' );">
+	<form method="post">
 		<div class="modal-content">
 			<h4>Jumlah</h4>
 			<div class="input-field col s6">
 				<input type="number" id="idpinjam" name="id" readonly hidden>
-				<input id="jml-brg" type="number" class="validate" name="jml-brg" placeholder="Jumlah Barang" required max="10">
+				<input id="jml-brg" type="number" class="validate" name="jml-brg" placeholder="Jumlah Barang" required min="0">
 			</div>
 		</div>
 		<div class="modal-footer">

@@ -5,7 +5,7 @@ class Inventory extends CI_Controller {
 	public function check_privilege()
 	{
 		if($this->session->userdata('logged_in')) {
-			if($this->session->userdata['role'] == 1){
+			if($this->session->userdata['role'] == 1 || $this->session->userdata['role'] == 2){
 				return true;
 			}
 			else {
@@ -45,7 +45,7 @@ class Inventory extends CI_Controller {
 	public function add()
 	{
 		if ($this->check_privilege() == true) {
-			$data['page_title'] = 'Manajemen User';
+			$data['page_title'] = 'Tambah Barang';
 			$data['users'] = $this->db_query->getData('users');
 
 			$this->load->view('admin/header', $data);
@@ -80,34 +80,28 @@ class Inventory extends CI_Controller {
 		}
 	}
 
-	public function preview()
+	public function editbrg()
 	{
 		if ($this->check_privilege() == true) {
-			$param = $_GET['id'];
-			$query = $this->db->get_where('barang', array('ID' => $param));
-			$response = $query->result_array();
-			echo json_encode($response);
+			$this->load->view('admin/header');
+			$this->load->view('inventory/EditBarang');
+			$this->load->view('inventory/footer');
 		}
 	}
 
-	public function edituser(){
+
+	public function subeditbrg()
+	{
 		if ($this->check_privilege() == true) {
-			$param = $this->input->post('user_id2');
-			if ($this->input->post('password2') == '') {
-				$data['user_rname'] = $this->input->post('nama2');
-				$data['user_login'] = $this->input->post('username2');
-				$data['user_email'] = $this->input->post('email2');
-			}
-			else {
-				$data['user_rname'] = $this->input->post('nama2');
-				$data['user_login'] = $this->input->post('username2');
-				$data['user_email'] = $this->input->post('email2');
-				$data['user_pass'] = $this->input->post('password2');
-			}
+			$param = $this->input->post('id');
+			$barang['kode_barang'] = $this->input->post('kode-brg');
+			$barang['nama_barang'] = $this->input->post('nama-brg');
+			$barang['tipe_barang'] = $this->input->post('tipe-brg');
+			$barang['jumlah_barang'] = $this->input->post('jml-brg');
+			$barang['kondisi_barang'] = $this->input->post('kondisi-brg');
 
-			$this->db->update('users', $data, array('ID' => $param));
-
-			redirect('admin/users/' ,'refresh');
+			$this->db->update('barang', $barang, array('id' => $param));
+			redirect('inventory/','refresh');
 		}
 	}
 

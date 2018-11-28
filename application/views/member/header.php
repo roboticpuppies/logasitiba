@@ -22,9 +22,9 @@
 			<li><a class="subheader">Navigation</a></li>
 			<li><a href="<?= base_url('member/') ?>"><i class="material-icons">home</i>Home</a></li>
 			<li><a href="<?= base_url('member/waiting') ?>"><i class="material-icons">thumb_up</i>Menunggu Approval</a></li>
-			<li><a href="<?= base_url('member/listbrg') ?>"><i class="material-icons">bookmark</i>Barang yang dipinjam</a></li>
+			<li><a href="<?= base_url('member/listbrg') ?>"><i class="material-icons">bookmark</i>Barang yang dipinjam</a>
+				<li><a href="<?= base_url('member/rejected') ?>"><i class="material-icons">close</i>Peminjaman di tolak</a></li>
 			<li><a class="subheader">Account</a></li>
-			<li><a href="#!"><i class="material-icons">settings</i>Settings</a></li>
 			<li><a href="<?= base_url('auth/logout') ?>"><i class="material-icons">keyboard_backspace</i>Sign Out</a></li>
 		</ul>
 	</header>

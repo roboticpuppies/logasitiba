@@ -20,15 +20,17 @@
 		<ul id="slide-out" class="sidenav sidenav-fixed" style="padding-top: 50px">
 			<li><a class="subheader"><i class="material-icons">dashboard</i>Dashboard</a></li>
 			<li><a class="subheader">Navigation</a></li>
+			<?php if($this->session->userdata['role'] == 1): ?>
 			<li><a href="<?= base_url('admin/') ?>"><i class="material-icons">home</i>Home</a></li>
 			<li><a href="<?= base_url('admin/users/') ?>"><i class="material-icons">people</i>Manajemen Laboran</a></li>
 			<li><a href="<?= base_url('admin/member/') ?>"><i class="material-icons">face</i>Manajemen Member</a></li>
+			<?php endif ?>
 			<li><a href="<?= base_url('inventory/') ?>"><i class="material-icons">list</i>Manajemen Barang</a></li>
-			<li><a href="<?= base_url('peminjaman/') ?>"><i class="material-icons">bookmark</i>Daftar Peminjaman</a></li>
 			<li><a href="<?= base_url('peminjaman/waiting_approval') ?>"><i class="material-icons">thumb_up</i>Menunggu Approval</a></li>
+			<li><a href="<?= base_url('peminjaman/') ?>"><i class="material-icons">bookmark</i>Daftar Peminjaman</a></li>
 			<li><a href="<?= base_url('peminjaman/log/') ?>"><i class="material-icons">history</i>Log Peminjaman</a></li>
+			<li><a href="<?= base_url('peminjaman/rejected/') ?>"><i class="material-icons">close</i>Peminjaman Ditolak</a></li>
 			<li><a class="subheader">Account</a></li>
-			<li><a href="#!"><i class="material-icons">settings</i>Settings</a></li>
 			<li><a href="<?= base_url('auth/logout') ?>"><i class="material-icons">keyboard_backspace</i>Sign Out</a></li>
 		</ul>
 	</header>

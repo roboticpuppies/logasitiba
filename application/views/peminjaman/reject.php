@@ -1,7 +1,7 @@
 <main>
 	<div class="container">
-		<h5 class="light">Waiting Approval</h5>
-		<p class="grey-text">Daftar barang yang menunggu disetujui untuk dipinjam.</p>
+		<h5 class="light">Peminjaman Ditolak</h5>
+		<p class="grey-text">Daftar peminjaman barang yang tidak disetujui.</p>
 		<br>
 		<label>
 			<input name="group1" type="radio" class="with-gap" value="1" checked />
@@ -22,7 +22,6 @@
 					<th>Nama Barang</th>
 					<th>Jumlah Barang</th>
 					<th>Tanggal Pinjam</th>
-					<th>&nbsp;</th>
 				</tr>
 			</thead>
 
@@ -34,10 +33,6 @@
 					<td><?= $barang['nama_barang'] ?></td>
 					<td><?= $barang['quantity'] ?></td>
 					<td><?= $barang['tgl_pinjam'] ?></td>
-					<td>
-						<a href="#" id="approve" data-id-member="<?= $barang['member_id'] ?>" data-id-peminjaman="<?= $barang['id'] ?>" data-id-barang="<?= $barang['barang_id'] ?>" data-act="approve" class="waves-effect btn blue darken-2">Setujui</a>
-						<a href="#" id="approve" data-id-member="<?= $barang['member_id'] ?>" data-id-peminjaman="<?= $barang['id'] ?>" data-id-barang="<?= $barang['barang_id'] ?>" data-act="tolak" class="waves-effect btn red darken-2">Tolak</a>
-					</td>
 				</tr>
 			<?php endforeach ?>
 		</tbody>
