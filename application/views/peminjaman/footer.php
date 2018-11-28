@@ -60,7 +60,7 @@
 							success: function(e){
 								M.toast({html: 'Peminjaman berhasil ditolak.', displayLength: 2000});
 								setTimeout(function() {
-									// location.reload();
+									location.reload();
 								}, 1000);
 							},
 							error: function(){

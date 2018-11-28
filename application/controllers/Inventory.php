@@ -16,6 +16,7 @@ class Inventory extends CI_Controller {
 			redirect('auth/','refresh');
 		}
 	}
+	
 	public function index(){
 		if ($this->check_privilege() == true) {
 			$data['page_title'] = 'Manajemen Barang';
